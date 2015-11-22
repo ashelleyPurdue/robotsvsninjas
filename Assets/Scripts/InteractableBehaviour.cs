@@ -7,6 +7,8 @@ public class InteractableBehaviour : MonoBehaviour
 
     public void Interact()
     {
-        BroadcastMessage("OnInteract");
+        BroadcastMessage("OnInteract", SendMessageOptions.DontRequireReceiver);
+
+        Debug.Log(highlightText);
     }
 }

@@ -15,12 +15,25 @@ public class PlayerBehaviour : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        SelectObject();
+	void Update ()
+    {
+        InteractControls();
 	}
 
 
     //Misc methods
+
+    private void InteractControls()
+    {
+        //Select the object being pointed at
+        SelectObject();
+
+        //Interact with the selected object
+        if (Input.GetButtonDown("Interact") && selectedObject != null)
+        {
+            selectedObject.Interact();
+        }
+    }
 
     private void SelectObject()
     {

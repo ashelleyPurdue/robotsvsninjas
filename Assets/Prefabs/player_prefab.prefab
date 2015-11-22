@@ -30,6 +30,7 @@ GameObject:
   - 136: {fileID: 13614852}
   - 114: {fileID: 11420280}
   - 114: {fileID: 11438556}
+  - 114: {fileID: 11499644}
   m_Layer: 0
   m_Name: player_prefab
   m_TagString: Untagged
@@ -275,6 +276,20 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 11420280}
   StrideInterval: 4
   RunningStrideLengthen: .722000003
+--- !u!114 &11499644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8d316299cb04946a5edf96cccf6cbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCamera: {fileID: 497082}
+  interactReach: 1
+  selectedObject: {fileID: 0}
 --- !u!136 &13614852
 CapsuleCollider:
   m_ObjectHideFlags: 1
