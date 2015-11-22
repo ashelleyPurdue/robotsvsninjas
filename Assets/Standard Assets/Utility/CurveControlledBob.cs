@@ -36,6 +36,12 @@ namespace UnityStandardAssets.Utility
             float xPos = m_OriginalCameraPosition.x + (Bobcurve.Evaluate(m_CyclePositionX)*HorizontalBobRange);
             float yPos = m_OriginalCameraPosition.y + (Bobcurve.Evaluate(m_CyclePositionY)*VerticalBobRange);
 
+            //Prevent division by zero.
+            if (m_BobBaseInterval == 0)
+            {
+                m_BobBaseInterval = 0.1f;
+            }
+
             m_CyclePositionX += (speed*Time.deltaTime)/m_BobBaseInterval;
             m_CyclePositionY += ((speed*Time.deltaTime)/m_BobBaseInterval)*VerticaltoHorizontalRatio;
 
