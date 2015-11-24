@@ -6,12 +6,12 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 {
     //Configuration
     //Timing parameters
-    private float swingTime = 0.25f;
+    private float swingTime = 0.3f;
     private float recoverTime = 0.5f;
     private float cooldownTime = 0.2f;
 
     //Swing position parameters
-    private float swingAngle = 45f;
+    private float swingAngle = 90f;
     private float swingDistance = 1f;
     private float swingHeight = 0f;
 
@@ -50,13 +50,18 @@ public class PlayerSwordBehaviour : WeaponBehaviour
         readyRot = transform.localRotation;
 
         //Calculate the swing start and end positions
-        Vector3 midPoint = transform.parent.forward * swingDistance * -1;
+        float midAngle = 90f * Mathf.Deg2Rad;
+        float halfAngle = Mathf.Deg2Rad * (swingAngle / 2);
 
-        swingStartPos = Quaternion.Euler(0, swingAngle, 0) * midPoint;
-        swingEndPos = Quaternion.Euler(0, -swingAngle, 0) * midPoint;
+        float startAngle = midAngle - halfAngle;
+        float endAngle = midAngle + halfAngle;
 
-        //TODO: Calculate start and end rotations
+        swingStartPos = new Vector3(Mathf.Cos(startAngle), 0, Mathf.Sin(startAngle)) * swingDistance;
+        swingEndPos = new Vector3(Mathf.Cos(endAngle), 0, Mathf.Sin(endAngle)) * swingDistance;
 
+        //Calculate start and end rotations
+        swingStartRot = Quaternion.Euler(90, swingAngle / 2, 0);
+        swingEndRot = Quaternion.Euler(90, -swingAngle / 2, 0);
 
         //Set up the state machine
         stateMethods.Add(State.ready, WhileReady);
@@ -110,7 +115,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             timer += Time.deltaTime;
 
             transform.localPosition = Vector3.Slerp(swingStartPos, swingEndPos, timer / swingTime);
-            //TODO: Rotate as well.
+            transform.localRotation = Quaternion.Slerp(swingStartRot, swingEndRot, timer / swingTime);
 
             //Go back to ready when done
             if (timer >= swingTime)
