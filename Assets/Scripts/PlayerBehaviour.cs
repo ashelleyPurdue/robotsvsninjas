@@ -30,6 +30,12 @@ public class PlayerBehaviour : MonoBehaviour
     {
         InteractControls();
         WeaponSwapControls();
+
+        //Send the attackButton data to the right hand weapon
+        if (RightHandWeapon != null)
+        {
+            RightHandWeapon.attackButton = Input.GetButton("Fire1");
+        }
 	}
 
 
