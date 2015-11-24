@@ -1,4 +1,4 @@
-﻿public enum DamageTags
+﻿public enum DamageTag
 {
     fromPlayer,
     fromEnemy,
