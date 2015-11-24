@@ -5,16 +5,27 @@ public class PlayerBehaviour : MonoBehaviour
 {
     public Transform myCamera;
 
+    //Interaction
     public float interactReach = 1f;
+    [SerializeField]
+    private InteractableBehaviour selectedObject;
 
-    [SerializeField]private InteractableBehaviour selectedObject;
+    //Weapons
+    public WeaponBehaviour RightHandWeapon
+    {
+        get { return rightHandWeaponWheel[currentRightHandWeapon]; }
+    }
+    public WeaponBehaviour[] rightHandWeaponWheel;
+    private int currentRightHandWeapon = 0;
 
-	// Use this for initialization
-	void Start () {
-	
+
+    //Events
+	void Awake()
+    {
+        //Swap to the first weapon.
+        RightHandWeapon.OnSwapIn();
 	}
 	
-	// Update is called once per frame
 	void Update ()
     {
         InteractControls();
@@ -23,6 +34,11 @@ public class PlayerBehaviour : MonoBehaviour
 
     //Misc methods
 
+    private void WeaponSwapControls()
+    {
+        //TODO: Swap weapons
+    }
+    
     private void InteractControls()
     {
         //Select the object being pointed at
