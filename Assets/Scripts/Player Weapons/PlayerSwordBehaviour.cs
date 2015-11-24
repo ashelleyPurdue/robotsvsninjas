@@ -6,12 +6,12 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 {
     //Configuration
     //Timing parameters
-    private float swingTime = 0.3f;
+    private float swingTime = 0.25f;
     private float recoverTime = 0.3f;
 
     //Swing position parameters
-    private float swingAngle = 90f;
-    private float swingDistance = 1f;
+    private float swingAngle = 67.5f;
+    private float swingDistance = 0.75f;
     private float swingHeight = 0f;
 
 
