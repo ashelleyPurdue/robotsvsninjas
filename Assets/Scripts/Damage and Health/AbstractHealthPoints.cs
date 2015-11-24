@@ -11,8 +11,11 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     public float cooldownTime = 0f;
 
     protected bool isCoolingDown = false;
+    protected bool isDead = false;
+
     protected float timer = 0f;
 
+    //Interface
     public virtual bool IsVulnerableTo(DamageSource src)
     {
         //Returns if this object is vulnerable to the given damage source according to only the vulnerability lists.
@@ -54,6 +57,16 @@ public abstract class AbstractHealthPoints : MonoBehaviour
         return (!isCoolingDown) && (!ignoreList.Contains(src)) && IsVulnerableTo(src);
     }
 
+    public virtual bool IsCoolingDown()
+    {
+        return isCoolingDown;
+    }
+
+    public virtual bool IsDead()
+    {
+        return isDead;
+    }
+
     public abstract void DealDamage(int amount);    //Deals the given amount of damage.  Different implementations can have different ways of handling this.
 
     public virtual void AttackFrom(DamageSource src)
@@ -64,5 +77,15 @@ public abstract class AbstractHealthPoints : MonoBehaviour
         {
             DealDamage(src.damageAmount);
         }
+    }
+
+
+    //Misc methods
+
+    protected virtual void Die()
+    {
+        //Die
+        isDead = true;
+        BroadcastMessage("OnDead");
     }
 }
