@@ -10,6 +10,8 @@ public abstract class AbstractHealthPoints : MonoBehaviour
 
     public float cooldownTime = 0f;
 
+    public bool useDefaultHitDetection = true;  //If true, will take damage when colliding with a DamageSource that also has this true.
+
     protected bool isCoolingDown = false;
     protected bool isDead = false;
 
