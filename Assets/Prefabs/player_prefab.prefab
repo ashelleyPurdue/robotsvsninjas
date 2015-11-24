@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 404366}
   - 33: {fileID: 3368662}
-  - 136: {fileID: 13600808}
   - 23: {fileID: 2381126}
   m_Layer: 0
   m_Name: Capsule
@@ -43,7 +42,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 447082}
   - 33: {fileID: 3303602}
-  - 135: {fileID: 13537678}
   - 23: {fileID: 2301090}
   m_Layer: 0
   m_Name: Sphere
@@ -518,31 +516,6 @@ MonoBehaviour:
   selectedObject: {fileID: 0}
   rightHandWeaponWheel:
   - {fileID: 11426770}
---- !u!135 &13537678
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 146782}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &13600808
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 117218}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13614852
 CapsuleCollider:
   m_ObjectHideFlags: 1
