@@ -1,15 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WoodenBoardBehaviour : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+[RequireComponent(typeof(HealthPoints))]
+public class WoodenBoardBehaviour : MonoBehaviour
+{
+    public void OnDead()
+    {
+        //Destory when dead
+        GameObject.Destroy(gameObject);
+    }
 }
