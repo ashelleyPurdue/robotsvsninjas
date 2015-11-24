@@ -29,6 +29,7 @@ public class PlayerBehaviour : MonoBehaviour
 	void Update ()
     {
         InteractControls();
+        WeaponSwapControls();
 	}
 
 
