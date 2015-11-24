@@ -42,6 +42,9 @@ public class HealthPoints : AbstractHealthPoints
             timer = 0f;
         }
 
+        //Broadcast the OnTakeDamage method
+        BroadcastMessage("OnTakeDamage", SendMessageOptions.DontRequireReceiver);
+
         //Die if out of health
         if (currentHealth <= 0)
         {

@@ -68,6 +68,7 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     }
 
     public abstract void DealDamage(int amount);    //Deals the given amount of damage.  Different implementations can have different ways of handling this.
+                                                    //Must broadcast the "OnTakeDamage" message.
 
     public virtual void AttackFrom(DamageSource src)
     {
