@@ -39,11 +39,16 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 
     private bool attackButtonPrev = false;
 
+    private DamageSource damageSrc;
+
 
 	//Events
 
     void Awake()
     {
+        //Get the damageSrc
+        damageSrc = GetComponent<DamageSource>();
+
         //Pre-compute the animation stages
         readyPos = transform.localPosition;
         readyRot = transform.localRotation;
@@ -93,6 +98,9 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     {
         if (!inFixedUpdate)
         {
+            //Make sure the damageSrc is off
+            damageSrc.isHot = false;
+
             //Keep at the ready pos
             transform.localPosition = readyPos;
             transform.localRotation = readyRot;
@@ -110,6 +118,9 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     {
         if (inFixedUpdate)
         {
+            //Make sure the damageSrc is on
+            damageSrc.isHot = true;
+
             //Swing
             timer += Time.deltaTime;
 
@@ -129,6 +140,9 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     {
         if (inFixedUpdate)
         {
+            //Make sure the damageSrc is off
+            damageSrc.isHot = false;
+
             //Recover
             timer += Time.deltaTime;
 
