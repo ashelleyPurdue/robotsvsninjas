@@ -7,8 +7,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     //Configuration
     //Timing parameters
     private float swingTime = 0.3f;
-    private float recoverTime = 0.5f;
-    private float cooldownTime = 0.2f;
+    private float recoverTime = 0.3f;
 
     //Swing position parameters
     private float swingAngle = 90f;
@@ -17,7 +16,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 
 
     //State-machine related
-    public enum State {ready, swinging, recovering, coolingDown, swappedOut};
+    public enum State {ready, swinging, recovering, swappedOut};
     private State currentState = State.ready;
 
     private delegate void StateMethod();
@@ -117,20 +116,34 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             transform.localPosition = Vector3.Slerp(swingStartPos, swingEndPos, timer / swingTime);
             transform.localRotation = Quaternion.Slerp(swingStartRot, swingEndRot, timer / swingTime);
 
-            //Go back to ready when done
+            //Start recovering when done
             if (timer >= swingTime)
             {
-                currentState = State.ready; //TODO: Go to recovering instead.
+                currentState = State.recovering;
+                timer = 0f;
             }
         }
     }
 
     private void WhileRecovering()
     {
-    }
+        if (inFixedUpdate)
+        {
+            //Recover
+            timer += Time.deltaTime;
 
-    private void WhileCoolingDown()
-    {
+            transform.localPosition = Vector3.Slerp(swingEndPos, readyPos, timer / recoverTime);
+            transform.localRotation = Quaternion.Slerp(swingEndRot, readyRot, timer / recoverTime);
+
+            //Back to ready
+            if (timer >= recoverTime)
+            {
+                currentState = State.ready;
+                transform.localPosition = readyPos;
+                transform.localRotation = readyRot;
+                timer = 0f;
+            }
+        }
     }
 
     private void WhileSwappedOut()
