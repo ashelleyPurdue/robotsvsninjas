@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class DamageSource : MonoBehaviour
 {
     public List<DamageTag> tags;
-    public int damageAmount = 0;
+    public double damageAmount = 0;
 
     public bool isHot = true;
     public bool useDefaultHitDetection = true;  //If true, will deal damage when colliding with a vulnerable AbstractHealthPoints

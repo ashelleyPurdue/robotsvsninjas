@@ -5,7 +5,7 @@ public class HealthPoints : AbstractHealthPoints
 {
     public int maxHealth;
 
-    protected int currentHealth;
+    protected double currentHealth;
 
 
     //Events
@@ -30,7 +30,7 @@ public class HealthPoints : AbstractHealthPoints
     }
 
     //Interface
-    public override void DealDamage(int amount)
+    public override void DealDamage(double amount)
     {
         //Get hurt
         currentHealth -= amount;
