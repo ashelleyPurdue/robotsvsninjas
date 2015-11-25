@@ -24,6 +24,10 @@ public class PlayerBehaviour : MonoBehaviour
     {
         //Swap to the first weapon.
         RightHandWeapon.OnSwapIn();
+
+		//Lock the cursor
+		Cursor.lockState = CursorLockMode.Locked;
+		Cursor.visible = false;
 	}
 	
 	void Update ()
