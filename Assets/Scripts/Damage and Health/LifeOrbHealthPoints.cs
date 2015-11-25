@@ -4,11 +4,11 @@ using System.Collections;
 public class LifeOrbHealthPoints : AbstractHealthPoints
 {
 	public int maxLifeOrbs;
-	public double maxOrbHealth;		//How much damage a single life orb can take before shattering.
+	public float maxOrbHealth;		//How much damage a single life orb can take before shattering.
 	public float lifeOrbRegenRate;	//How fast the current lifeOrb heals itself
 	public float lifeOrbRegenDelay;	//How long you have to wait without taking damage before the current lifeOrb will start regenerating.
 
-	protected double currentOrbHealth;	//When this reaches zero, the current orb shatters
+	protected float currentOrbHealth;	//When this reaches zero, the current orb shatters
 	protected int currentLifeOrbs;		//When this reaches zero, death occurs
 
 	protected float timer = 0f;
@@ -44,7 +44,7 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 
 	//Interface
 
-	public override void DealDamage(double amount)
+	public override void DealDamage(float amount)
 	{
 		//Damage the current orb.
 		currentOrbHealth -= amount;

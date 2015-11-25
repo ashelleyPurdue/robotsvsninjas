@@ -3,9 +3,9 @@ using System.Collections;
 
 public class HealthPoints : AbstractHealthPoints
 {
-    public int maxHealth;
+    public float maxHealth;
 
-    protected double currentHealth;
+    protected float currentHealth;
 
 
     //Events
@@ -30,7 +30,7 @@ public class HealthPoints : AbstractHealthPoints
     }
 
     //Interface
-    public override void DealDamage(double amount)
+    public override void DealDamage(float amount)
     {
         //Get hurt
         currentHealth -= amount;
