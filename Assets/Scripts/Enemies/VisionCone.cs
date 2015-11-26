@@ -7,11 +7,11 @@ public class VisionCone : MonoBehaviour
     public float radius = 100f;
     public float visionAngle = 114f;    //In degrees
 
-    public List<Collider> Scan<TargetType>()
+    public List<TargetType> Scan<TargetType>()
     {
         //Returns all visible colliders that also have the target type.
 
-        List<Collider> output = new List<Collider>();
+        List<TargetType> output = new List<TargetType>();
 
         //Get all colliders within the vision radius
         Collider[] inRange = Physics.OverlapSphere(transform.position, radius);
@@ -56,7 +56,7 @@ public class VisionCone : MonoBehaviour
             }
 
             //If all the checks were passed, add it to the list
-            output.Add(c);
+            output.Add(targetComponent);
         }
 
         return output;
