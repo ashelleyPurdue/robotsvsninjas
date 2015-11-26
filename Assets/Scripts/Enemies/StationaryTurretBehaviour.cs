@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class StationaryTurretBehaviour : MonoBehaviour {
+[RequireComponent(typeof(HealthPoints))]
+public class StationaryTurretBehaviour : MonoBehaviour
+{
+    //Tweaking
+
+    //States
+    public enum State {searching, attacking}
+    private State currentState = State.searching;
+
+    //Events
 
 	// Use this for initialization
 	void Start () {
