@@ -11,7 +11,7 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 	protected float currentOrbHealth;	//When this reaches zero, the current orb shatters
 	protected int currentLifeOrbs;		//When this reaches zero, death occurs
 
-	protected float timer = 0f;
+	protected float regenDelayTimer = 0f;
 
 
 	//Events
@@ -26,7 +26,7 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 	void FixedUpdate()
 	{
 		//Heal the current orb if we're past the delay.  Else, increment the timer.
-		if (timer >= lifeOrbRegenDelay)
+		if (regenDelayTimer >= lifeOrbRegenDelay)
 		{
 			currentOrbHealth += lifeOrbRegenRate * Time.deltaTime;
 
@@ -37,7 +37,7 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 		}
 		else
 		{
-			timer += Time.deltaTime;
+			regenDelayTimer += Time.deltaTime;
 		}
 	}
 
@@ -49,8 +49,8 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 		//Damage the current orb.
 		currentOrbHealth -= amount;
 
-		//Reset the timer
-		timer = 0f;
+		//Reset the regen timer
+		regenDelayTimer = 0f;
 
 		//If the orb is out of health, break it.
 		if (currentOrbHealth <= 0)
