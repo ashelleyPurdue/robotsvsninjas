@@ -5,4 +5,21 @@ using System.Collections;
 [RequireComponent(typeof(DamageSource))]
 public class BulletBehaviour : MonoBehaviour
 {
+    public float lifeTime = 1f;
+
+    void FixedUpdate()
+    {
+        //Destroy when out of time
+        lifeTime -= Time.deltaTime;
+        if (lifeTime <= 0)
+        {
+            GameObject.Destroy(gameObject);
+        }
+    }
+
+    void OnDealDamage()
+    {
+        //Destroy
+        GameObject.Destroy(gameObject);
+    }
 }
