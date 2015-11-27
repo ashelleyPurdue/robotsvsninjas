@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 [RequireComponent(typeof(HealthPoints))]
 [RequireComponent(typeof(VisionCone))]
+[RequireComponent(typeof(MachineGun))]
 public class StationaryTurretBehaviour : MonoBehaviour
 {
     //Tweaking
@@ -18,6 +19,7 @@ public class StationaryTurretBehaviour : MonoBehaviour
 
     //Misc fields
     private VisionCone visionCone;
+    private MachineGun machineGun;
     private PlayerBehaviour target;
 
     private Quaternion targetRot; 
@@ -29,8 +31,9 @@ public class StationaryTurretBehaviour : MonoBehaviour
         stateMethods.Add(State.searching, WhileSearching);
         stateMethods.Add(State.attacking, WhileAttacking);
 
-        //Get the cone
+        //Get components
         visionCone = GetComponent<VisionCone>();
+        machineGun = GetComponent<MachineGun>();
 
         //Start the targetRot at current rot
         targetRot = transform.rotation;
@@ -51,6 +54,9 @@ public class StationaryTurretBehaviour : MonoBehaviour
     //State methods
     private void WhileSearching()
     {
+        //Stop firing
+        machineGun.triggerPulled = false;
+
         //Rotate in a circle
         Vector3 euler = targetRot.eulerAngles;
         euler.x = 0;
@@ -82,7 +88,8 @@ public class StationaryTurretBehaviour : MonoBehaviour
         //Rotate towards the target rot
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
 
-        //TODO: Fire at the target
+        //Fire at the target
+        machineGun.triggerPulled = true;
 
         //If the target can't be seen anymore, go back into searching mode
         if (!visionCone.Scan<PlayerBehaviour>().Contains(target))
