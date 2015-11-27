@@ -17,6 +17,11 @@ public class BulletBehaviour : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision col)
+    {
+        GameObject.Destroy(gameObject, 0.01f);
+    }
+    
     void OnDealDamage()
     {
         //Destroy
