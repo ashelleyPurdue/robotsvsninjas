@@ -8,7 +8,7 @@ public class StationaryTurretBehaviour : MonoBehaviour
 {
     //Tweaking
     private float searchRotSpeed = 45f;
-    private float attackRotSpeed = 180f;
+    private float rotSpeed = 180f;
 
     //States
     public enum State {searching, attacking}
@@ -39,6 +39,7 @@ public class StationaryTurretBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         stateMethods[currentState]();
+
     }
 
     void OnDead()
@@ -50,10 +51,14 @@ public class StationaryTurretBehaviour : MonoBehaviour
     //State methods
     private void WhileSearching()
     {
-        //Rotate
-        Vector3 euler = transform.eulerAngles;
+        //Rotate in a circle
+        Vector3 euler = targetRot.eulerAngles;
+        euler.x = 0;
         euler.y += searchRotSpeed * Time.deltaTime;
-        transform.eulerAngles = euler;
+        targetRot.eulerAngles = euler;
+
+        //Rotate towards the target rot
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
 
         //Scan for a target
         List<PlayerBehaviour> hits = visionCone.Scan<PlayerBehaviour>();
@@ -75,7 +80,7 @@ public class StationaryTurretBehaviour : MonoBehaviour
         targetRot = Quaternion.LookRotation(targetDiff.normalized, Vector3.up);
 
         //Rotate towards the target rot
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, attackRotSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
 
         //TODO: Fire at the target
 
