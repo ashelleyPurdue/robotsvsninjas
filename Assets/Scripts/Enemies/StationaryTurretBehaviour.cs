@@ -6,16 +6,21 @@ using System.Collections.Generic;
 [RequireComponent(typeof(VisionCone))]
 public class StationaryTurretBehaviour : MonoBehaviour
 {
+    //Tweaking
+    private float searchRotSpeed = 45f;
+    private float attackRotSpeed = 180f;
+
     //States
     public enum State {searching, attacking}
     private State currentState = State.searching;
     private delegate void StateMethod();
     private Dictionary<State, StateMethod> stateMethods = new Dictionary<State, StateMethod>();
 
-
     //Misc fields
     private VisionCone visionCone;
     private PlayerBehaviour target;
+
+    private Quaternion targetRot; 
 
     //Events
     void Awake()
@@ -26,6 +31,9 @@ public class StationaryTurretBehaviour : MonoBehaviour
 
         //Get the cone
         visionCone = GetComponent<VisionCone>();
+
+        //Start the targetRot at current rot
+        targetRot = transform.rotation;
     }
 
     void FixedUpdate()
@@ -33,10 +41,21 @@ public class StationaryTurretBehaviour : MonoBehaviour
         stateMethods[currentState]();
     }
 
+    void OnDead()
+    {
+        //Destroy self
+        GameObject.Destroy(gameObject);
+    }
+
     //State methods
     private void WhileSearching()
     {
-        //Scane for a target
+        //Rotate
+        Vector3 euler = transform.eulerAngles;
+        euler.y += searchRotSpeed * Time.deltaTime;
+        transform.eulerAngles = euler;
+
+        //Scan for a target
         List<PlayerBehaviour> hits = visionCone.Scan<PlayerBehaviour>();
 
         //Start attacking the first hit in the list
@@ -52,7 +71,11 @@ public class StationaryTurretBehaviour : MonoBehaviour
     private void WhileAttacking()
     {
         //Look at target
-        transform.LookAt(target.transform);
+        Vector3 targetDiff = target.transform.position - transform.position;
+        targetRot = Quaternion.LookRotation(targetDiff.normalized, Vector3.up);
+
+        //Rotate towards the target rot
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, attackRotSpeed * Time.deltaTime);
 
         //TODO: Fire at the target
 
@@ -63,4 +86,6 @@ public class StationaryTurretBehaviour : MonoBehaviour
             currentState = State.searching;
         }
     }
+
+
 }
