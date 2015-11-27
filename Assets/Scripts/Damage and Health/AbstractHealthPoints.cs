@@ -89,6 +89,6 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     {
         //Die
         isDead = true;
-        BroadcastMessage("OnDead");
+        BroadcastMessage("OnDead", SendMessageOptions.DontRequireReceiver);
     }
 }
