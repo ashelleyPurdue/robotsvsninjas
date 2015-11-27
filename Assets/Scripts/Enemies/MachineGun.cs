@@ -50,6 +50,9 @@ public class MachineGun : MonoBehaviour
         BulletBehaviour bullet = bulletObj.GetComponent<BulletBehaviour>();
         Rigidbody bulletRigidbody = bulletObj.GetComponent<Rigidbody>();
 
+        //Set the bullet's location
+        bulletObj.transform.position = transform.position;
+
         //Set the bullet's damage amount
         bulletSrc.damageAmount = damageAmount;
         bulletSrc.isHot = true;
