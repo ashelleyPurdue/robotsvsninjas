@@ -79,6 +79,7 @@ public abstract class AbstractHealthPoints : MonoBehaviour
         if (CanBeHurtBy(src))
         {
             DealDamage(src.damageAmount);
+            src.BroadcastMessage("OnDealDamage");
         }
     }
 
