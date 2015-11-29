@@ -4,9 +4,10 @@ using System.Collections;
 public class MachineGun : MonoBehaviour
 {
     public float damageAmount = 0.4f;
-    public float fireRate = 5f;     //Bullets per second
+    public float fireRate = 5f;         //Bullets per second
     public float fireVelocity = 100f;
     public float bulletLifetime = 1f;
+    public float accuracyAngle = 10f;   //The smaller this angle, the less the bullets randomly deviate
 
     public bool triggerPulled = false;
 
@@ -62,5 +63,15 @@ public class MachineGun : MonoBehaviour
 
         //Set the bullet's velocity
         bulletRigidbody.velocity = bulletObj.transform.forward * fireVelocity;
+    }
+
+    private Vector3 GetBulletDirection(float angle)
+    {
+        //Returns the direction the bullet should be going.  Random, but accurate within the given angle.
+
+        Quaternion rot = Quaternion.identity;
+
+        //Rotate it by angle degrees
+        rot = Quaternion.Rot
     }
 }
