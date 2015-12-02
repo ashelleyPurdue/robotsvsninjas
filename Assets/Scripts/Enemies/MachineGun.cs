@@ -70,7 +70,7 @@ public class MachineGun : MonoBehaviour
         //Returns the direction the bullet should be going.  Random, but accurate within the given angle.
         
         //Find the direction of the bullet in local space.
-        Vector3 localDir = Vector3.one;
+        Vector3 localDir = new Vector3(0, 0, 1);
         
         localDir = Quaternion.Euler(Random.Range(0, angle / 2), 0 , 0) * localDir;
         localDir = Quaternion.Euler(0, 0, Random.Range(0, 360)) * localDir;
