@@ -59,7 +59,7 @@ public class MachineGun : MonoBehaviour
         bulletSrc.isHot = true;
 
         //Aim the bullet
-        bulletObj.transform.forward = transform.forward;
+        bulletObj.transform.forward = GetBulletDirection(accuracyAngle);
 
         //Set the bullet's velocity
         bulletRigidbody.velocity = bulletObj.transform.forward * fireVelocity;
@@ -68,10 +68,14 @@ public class MachineGun : MonoBehaviour
     private Vector3 GetBulletDirection(float angle)
     {
         //Returns the direction the bullet should be going.  Random, but accurate within the given angle.
-
-        Quaternion rot = Quaternion.identity;
-
-        //Rotate it by angle degrees
-        rot = Quaternion.Rot
+        
+        //Find the direction of the bullet in local space.
+        Vector3 localDir = Vector3.one;
+        
+        localDir = Quaternion.Euler(Random.Range(0, angle / 2), 0 , 0) * localDir;
+        localDir = Quaternion.Euler(0, 0, Random.Range(0, 360)) * localDir;
+        
+        //Return that direction in local space
+        return transform.localToWorldMatrix * localDir;
     }
 }
