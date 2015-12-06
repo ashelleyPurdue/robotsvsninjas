@@ -47,7 +47,16 @@ public class PlayerHealthDrawer : MonoBehaviour
 	{
 		//Adds a new orb.
 		
-		Image oldOrb = orbs.Peek();
+		Image oldOrb;
+		
+		if (orbs.Count <= 0)
+		{
+			oldOrb = null;
+		}
+		else
+		{
+		 	oldOrb = orbs.Peek();
+		}
 		
 		//Restore the old orb to full health.
 		if (oldOrb != null)
