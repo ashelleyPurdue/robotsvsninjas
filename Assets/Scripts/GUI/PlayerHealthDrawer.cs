@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(RectTransform))]
 public class PlayerHealthDrawer : MonoBehaviour
 {
-	public const float ORB_SEPARATION = 1f;
+	public const float ORB_SEPARATION = 10f;
 	
 	private LifeOrbHealthPoints playerHealth;
 	private Stack<Image> orbs = new Stack<Image>();
@@ -64,24 +64,28 @@ public class PlayerHealthDrawer : MonoBehaviour
 			ChangeOrbHealth(oldOrb, 1);
 		}
 		
+		//Create the new orb
+		GameObject newOrbObj = Instantiate((GameObject)Resources.Load("lifeOrb_image_prefab"));
+		RectTransform newOrbTrans = newOrbObj.GetComponent<RectTransform>();
+		Image newOrb = newOrbObj.GetComponent<Image>();
+		
+		//Push the orb onto the stack.
+		orbs.Push(newOrb);
+		
+		//Set the new orb's parent.
+		newOrbTrans.SetParent(transform);
+		
 		//Get the new position
-		Vector3 orbPos = Vector3.zero;
+		Vector2 orbPos = Vector2.zero;
 		
 		if (oldOrb != null)
 		{
-			orbPos = oldOrb.rectTransform.localPosition;
+			orbPos = oldOrb.rectTransform.anchoredPosition;
 		}
 		
-		orbPos.x += ORB_SEPARATION;
+		orbPos.x += newOrb.rectTransform.localScale.x;
 		
-		//Create the new orb
-		GameObject newOrb = Instantiate((GameObject)Resources.Load("lifeOrb_image_prefab"));
-		RectTransform newOrbTrans = newOrb.GetComponent<RectTransform>();
-		newOrbTrans.localPosition = orbPos;
-		newOrbTrans.SetParent(transform);
-		
-		//Push the orb onto the stack.
-		orbs.Push(newOrb.GetComponent<Image>());
+		newOrbTrans.anchoredPosition = orbPos;
 	}
 	
 	private void RemoveOrb()
