@@ -31,13 +31,14 @@ public class PlayerHealthDrawer : MonoBehaviour
 			RemoveOrb();
 		}
 		
-		//Update the current orb's health
-		Image currentOrb = orbs.Peek();
-		
-		if (currentOrb == null)
+		//Don't go on if we're out of health
+		if (orbs.Count <= 0)
 		{
 			return;
 		}
+		
+		//Update the current orb's health
+		Image currentOrb = orbs.Peek();
 		
 		ChangeOrbHealth(currentOrb, playerHealth.CurrentOrbHealth / playerHealth.maxOrbHealth);
 	}
@@ -92,6 +93,11 @@ public class PlayerHealthDrawer : MonoBehaviour
 	private void RemoveOrb()
 	{
 		//Removes the current orb.
+		
+		if (orbs.Count <= 0)
+		{
+			return;
+		}
 		
 		Image currentOrb = orbs.Pop();
 		
