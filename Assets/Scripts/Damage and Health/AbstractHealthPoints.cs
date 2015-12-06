@@ -75,11 +75,19 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     public virtual void AttackFrom(DamageSource src)
     {
         //Gets this object attacked by src.  Deals damage if vulnerable.
-
+        
+        Debug.Log("" + this.name + " attacked from " + src.name);
+        
         if (CanBeHurtBy(src))
         {
+            Debug.Log("Can be hurt by.");
+            
             DealDamage(src.damageAmount);
             src.BroadcastMessage("OnDealDamage", SendMessageOptions.DontRequireReceiver);
+        }
+        else
+        {
+            Debug.Log("Can't be hurt.");
         }
     }
 

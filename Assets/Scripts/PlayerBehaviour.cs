@@ -54,6 +54,11 @@ public class PlayerBehaviour : MonoBehaviour
         Debug.Log("Collision enter");
     }
 
+    void OnTakeDamage()
+    {
+        Debug.Log("Damage taken");
+    }
+
     //Misc methods
 
     private void WeaponSwapControls()
