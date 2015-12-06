@@ -22,6 +22,12 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     {
         //Returns if this object is vulnerable to the given damage source according to only the vulnerability lists.
 
+        //If the src's tags are empty, log a warning and return true.
+        if (src.tags.Count <= 0)
+        {
+            Debug.LogError("ERROR: " + src.name + "'s damage source has no DamageTags.  Please fix this.");
+        }
+
         //If the vulnerable list has something in it, then the src must contain one of tags in vulnerableTo
         if (vulnerableTo.Count > 0)
         {
@@ -56,7 +62,10 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     {
         //Returns if this object can be hurt by the given source, taking into account both the vulnerability lists, the ignore list, and the cooldown state.
 
-        return (!isCoolingDown) && (!src.ignoreList.Contains(this)) && (!ignoreList.Contains(src)) && IsVulnerableTo(src);
+        return (!isCoolingDown) &&
+            (!src.ignoreList.Contains(this)) &&
+            (!ignoreList.Contains(src)) &&
+            IsVulnerableTo(src);
     }
 
     public virtual bool IsCoolingDown()
