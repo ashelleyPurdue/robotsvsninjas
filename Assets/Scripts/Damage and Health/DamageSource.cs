@@ -12,10 +12,18 @@ public class DamageSource : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        OnHealthCollisionEnter(other.GetComponent<AbstractHealthPoints>());
+    }
+    
+    void OnCollisionEnter(Collision col)
+    {
+        OnHealthCollisionEnter(col.collider.GetComponent<AbstractHealthPoints>());
+    }
+    
+    //Misc methods
+    private void OnHealthCollisionEnter(AbstractHealthPoints hp)
+    {
         //Attack any HealthPoints
-
-        AbstractHealthPoints hp = other.GetComponent<AbstractHealthPoints>();
-
         if (hp != null && useDefaultHitDetection && isHot)
         {
             hp.AttackFrom(this);

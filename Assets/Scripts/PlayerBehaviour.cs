@@ -42,6 +42,17 @@ public class PlayerBehaviour : MonoBehaviour
         }
 	}
 
+    void OnTriggerEnter(Collider other)
+    {
+        //DEBUG: Print it.
+        Debug.Log("Trigger enter");
+    }
+    
+    void OnCollisionEnter(Collision col)
+    {
+        //DEBUG: Print it
+        Debug.Log("Collision enter");
+    }
 
     //Misc methods
 
