@@ -25,8 +25,6 @@ public class DamageSource : MonoBehaviour
     //Misc methods
     private void OnHealthCollisionEnter(AbstractHealthPoints hp)
     {
-        Debug.Log("DamageSource: OnHealthCollisionEnter");
-        
         //Attack any HealthPoints
         if (hp != null && useDefaultHitDetection && isHot)
         {
