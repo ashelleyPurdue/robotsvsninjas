@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerBehaviour : MonoBehaviour
 {
+	public static PlayerBehaviour instance = null;
+	
     public Transform myCamera;
 
     //Interaction
@@ -22,6 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
     //Events
 	void Awake()
     {
+		//Set the instance
+		instance = this;
+		
         //Swap to the first weapon.
         RightHandWeapon.OnSwapIn();
 

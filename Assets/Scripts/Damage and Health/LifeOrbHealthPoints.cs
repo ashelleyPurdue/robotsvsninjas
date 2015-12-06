@@ -8,6 +8,9 @@ public class LifeOrbHealthPoints : AbstractHealthPoints
 	public float lifeOrbRegenRate;	//How fast the current lifeOrb heals itself
 	public float lifeOrbRegenDelay;	//How long you have to wait without taking damage before the current lifeOrb will start regenerating.
 
+	public float CurrentOrbHealth {get {return currentOrbHealth;}}
+	public int CurrentLifeOrbs{get {return currentLifeOrbs;}}
+
 	protected float currentOrbHealth;	//When this reaches zero, the current orb shatters
 	protected int currentLifeOrbs;		//When this reaches zero, death occurs
 
