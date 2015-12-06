@@ -104,6 +104,6 @@ public class PlayerHealthDrawer : MonoBehaviour
 	private void ChangeOrbHealth(Image orb, float percentLeft)
 	{
 		//Updates the specified orb image to have the given percent of its health left.
-		//TODO: Do something.
+		orb.rectTransform.localScale = new Vector2(percentLeft, percentLeft);
 	}
 }
