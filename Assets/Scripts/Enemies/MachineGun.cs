@@ -57,6 +57,7 @@ public class MachineGun : MonoBehaviour
         //Set the bullet's damage amount
         bulletSrc.damageAmount = damageAmount;
         bulletSrc.isHot = true;
+        bulletSrc.tags.Add(DamageTag.fromEnemy);
 
         //Aim the bullet
         bulletObj.transform.forward = GetBulletDirection(accuracyAngle);
