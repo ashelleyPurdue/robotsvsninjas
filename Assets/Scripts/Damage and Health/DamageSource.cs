@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class DamageSource : MonoBehaviour
 {
     public List<DamageTag> tags;
+    public List<AbstractHealthPoints> ignoreList = new List<AbstractHealthPoints>();
+    
     public float damageAmount = 0;
 
     public bool isHot = true;

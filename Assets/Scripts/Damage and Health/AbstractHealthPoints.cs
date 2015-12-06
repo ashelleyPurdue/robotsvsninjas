@@ -56,7 +56,7 @@ public abstract class AbstractHealthPoints : MonoBehaviour
     {
         //Returns if this object can be hurt by the given source, taking into account both the vulnerability lists, the ignore list, and the cooldown state.
 
-        return (!isCoolingDown) && (!ignoreList.Contains(src)) && IsVulnerableTo(src);
+        return (!isCoolingDown) && (!src.ignoreList.Contains(this)) && (!ignoreList.Contains(src)) && IsVulnerableTo(src);
     }
 
     public virtual bool IsCoolingDown()

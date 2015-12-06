@@ -58,7 +58,14 @@ public class MachineGun : MonoBehaviour
         bulletSrc.damageAmount = damageAmount;
         bulletSrc.isHot = true;
         bulletSrc.tags.Add(DamageTag.fromEnemy);
-
+        
+        //Make sure the bullet doesn't hurt this object
+        AbstractHealthPoints myHealth = GetComponent<AbstractHealthPoints>();
+        if (myHealth != null)
+        {
+            bulletSrc.ignoreList.Add(myHealth);
+        }
+        
         //Aim the bullet
         bulletObj.transform.forward = GetBulletDirection(accuracyAngle);
 
