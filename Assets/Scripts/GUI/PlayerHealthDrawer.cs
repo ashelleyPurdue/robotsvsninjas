@@ -83,9 +83,9 @@ public class PlayerHealthDrawer : MonoBehaviour
 		{
 			orbPos = oldOrb.GetComponent<RectTransform>().anchoredPosition;
 		}
-		
-		//Space the orb out.
-		orbPos.x += newOrbTrans.rect.width * newOrb.background.canvas.scaleFactor / 2;
+
+        //Space the orb out.
+        orbPos.x += newOrbTrans.rect.width; //* newOrb.background.canvas.scaleFactor / 2;
 		
 		newOrbTrans.anchoredPosition = orbPos;
 	}
