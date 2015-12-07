@@ -40,6 +40,13 @@ public class PlayerBehaviour : MonoBehaviour
         InteractControls();
         WeaponSwapControls();
 
+        //Let the cursor escape when pressing "escape"
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
         //Send the attackButton data to the right hand weapon
         if (RightHandWeapon != null)
         {
