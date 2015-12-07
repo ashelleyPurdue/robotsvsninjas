@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
     public WeaponBehaviour[] rightHandWeaponWheel;
     private int currentRightHandWeapon = 0;
 
+    private bool cursorCaptured;
 
     //Events
 	void Awake()
@@ -33,6 +34,7 @@ public class PlayerBehaviour : MonoBehaviour
 		//Lock the cursor
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
+        cursorCaptured = true;
 	}
 	
 	void Update ()
@@ -40,12 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
         InteractControls();
         WeaponSwapControls();
 
-        //Let the cursor escape when pressing "escape"
-        if (Input.GetButtonDown("Cancel"))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+        CaptureCursor();
 
         //Send the attackButton data to the right hand weapon
         if (RightHandWeapon != null)
@@ -56,6 +53,50 @@ public class PlayerBehaviour : MonoBehaviour
 
 
     //Misc methods
+
+    private void CaptureCursor()
+    {
+        //Handles capturing of the cursor.
+
+        //Decide if the cursor should be captured
+        if (cursorCaptured)
+        {
+            //If the "Cancel" button is pressed, release the cursor.
+            if (Input.GetButtonDown("Cancel"))
+            {
+                cursorCaptured = false;
+            }
+        }
+        else
+        {
+            //If any of the major buttons are pressed, capture the cursor.
+            string[] majorButtons = {"Fire1", "Fire2"};
+            foreach (string button in majorButtons)
+            {
+                if (Input.GetButtonDown(button))
+                {
+                    cursorCaptured = true;
+                }
+            }
+
+            //If the movement axies are pressed, capture the cursor
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            {
+                cursorCaptured = true;
+            }
+        }
+
+        //Capture the cursor if it should be.
+        Cursor.visible = !cursorCaptured;
+        if (cursorCaptured)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 
     private void WeaponSwapControls()
     {
