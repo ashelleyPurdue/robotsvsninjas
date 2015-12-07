@@ -85,7 +85,7 @@ public class PlayerHealthDrawer : MonoBehaviour
 		}
 
         //Space the orb out.
-        orbPos.x += newOrbTrans.rect.width; //* newOrb.background.canvas.scaleFactor / 2;
+        //orbPos.x += newOrbTrans.rect.width; //* newOrb.background.canvas.scaleFactor / 2;
 		
 		newOrbTrans.anchoredPosition = orbPos;
 	}
