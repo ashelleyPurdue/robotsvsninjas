@@ -75,7 +75,11 @@ public class PlayerHealthDrawer : MonoBehaviour
 		
 		//Set the new orb's parent.
 		newOrbTrans.SetParent(transform);
-		
+
+        //Set the new orb's anchor
+        newOrbTrans.anchorMin = Vector2.zero;
+        newOrbTrans.anchorMax = Vector2.zero;
+
 		//Get the new position
 		Vector2 orbPos = Vector2.zero;
 		
