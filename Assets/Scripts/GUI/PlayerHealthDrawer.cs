@@ -9,7 +9,7 @@ public class PlayerHealthDrawer : MonoBehaviour
 	public const float ORB_SEPARATION = 10f;
 	
 	private LifeOrbHealthPoints playerHealth;
-	private Stack<Image> orbs = new Stack<Image>();
+	private Stack<LifeOrbGUI> orbs = new Stack<LifeOrbGUI>();
 	
 	
 	//Events
@@ -38,9 +38,9 @@ public class PlayerHealthDrawer : MonoBehaviour
 		}
 		
 		//Update the current orb's health
-		Image currentOrb = orbs.Peek();
-		
-		ChangeOrbHealth(currentOrb, playerHealth.CurrentOrbHealth / playerHealth.maxOrbHealth);
+		LifeOrbGUI currentOrb = orbs.Peek();
+
+        currentOrb.ChangeHealth(playerHealth.CurrentOrbHealth / playerHealth.maxOrbHealth);
 	}
 	
 	//Misc methods
@@ -48,7 +48,7 @@ public class PlayerHealthDrawer : MonoBehaviour
 	{
 		//Adds a new orb.
 		
-		Image oldOrb;
+		LifeOrbGUI oldOrb;
 		
 		if (orbs.Count <= 0)
 		{
@@ -62,13 +62,13 @@ public class PlayerHealthDrawer : MonoBehaviour
 		//Restore the old orb to full health.
 		if (oldOrb != null)
 		{
-			ChangeOrbHealth(oldOrb, 1);
+            oldOrb.ChangeHealth(1);
 		}
 		
 		//Create the new orb
 		GameObject newOrbObj = Instantiate((GameObject)Resources.Load("lifeOrb_image_prefab"));
 		RectTransform newOrbTrans = newOrbObj.GetComponent<RectTransform>();
-		Image newOrb = newOrbObj.GetComponent<Image>();
+		LifeOrbGUI newOrb = newOrbObj.GetComponent<LifeOrbGUI>();
 		
 		//Push the orb onto the stack.
 		orbs.Push(newOrb);
@@ -81,11 +81,11 @@ public class PlayerHealthDrawer : MonoBehaviour
 		
 		if (oldOrb != null)
 		{
-			orbPos = oldOrb.rectTransform.anchoredPosition;
+			orbPos = oldOrb.GetComponent<RectTransform>().anchoredPosition;
 		}
 		
 		//Space the orb out.
-		orbPos.x += newOrbTrans.rect.width * newOrb.canvas.scaleFactor / 2;
+		orbPos.x += newOrbTrans.rect.width * newOrb.background.canvas.scaleFactor / 2;
 		
 		newOrbTrans.anchoredPosition = orbPos;
 	}
@@ -99,17 +99,11 @@ public class PlayerHealthDrawer : MonoBehaviour
 			return;
 		}
 		
-		Image currentOrb = orbs.Pop();
+		LifeOrbGUI currentOrb = orbs.Pop();
 		
 		if (currentOrb != null)
 		{
 			GameObject.Destroy(currentOrb.gameObject);
 		}
-	}
-	
-	private void ChangeOrbHealth(Image orb, float percentLeft)
-	{
-		//Updates the specified orb image to have the given percent of its health left.
-		orb.rectTransform.localScale = new Vector2(percentLeft, percentLeft);
 	}
 }
