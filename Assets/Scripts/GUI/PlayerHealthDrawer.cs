@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(RectTransform))]
 public class PlayerHealthDrawer : MonoBehaviour
 {
-	public const float ORB_SEPARATION = 10f;
+	public const float ORB_SEPARATION = 2f;
 	
 	private LifeOrbHealthPoints playerHealth;
 	private Stack<LifeOrbGUI> orbs = new Stack<LifeOrbGUI>();
@@ -85,7 +85,7 @@ public class PlayerHealthDrawer : MonoBehaviour
 		}
 
         //Space the orb out.
-        //orbPos.x += newOrbTrans.rect.width; //* newOrb.background.canvas.scaleFactor / 2;
+        orbPos.x += (newOrbTrans.rect.width + ORB_SEPARATION) * newOrb.background.canvas.scaleFactor;
 		
 		newOrbTrans.anchoredPosition = orbPos;
 	}
