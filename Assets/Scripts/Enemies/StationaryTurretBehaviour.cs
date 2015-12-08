@@ -32,7 +32,6 @@ public class StationaryTurretBehaviour : MonoBehaviour
 
         //Get components
         visionCone = GetComponent<VisionCone>();
-        machineGun = GetComponent<MachineGun>();
 
         //Start the targetRot at current rot
         targetRot = transform.rotation;

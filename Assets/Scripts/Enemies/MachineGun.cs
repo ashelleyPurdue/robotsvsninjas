@@ -43,8 +43,6 @@ public class MachineGun : MonoBehaviour
     //Misc methods
     private void Fire()
     {
-        //TODO: Allow random spread
-
         //Create the bullet
         GameObject bulletObj = (GameObject)Instantiate(Resources.Load("bullet_prefab"));
         DamageSource bulletSrc = bulletObj.GetComponent<DamageSource>();
