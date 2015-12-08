@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(DamageSource))]
 public class MachineGun : MonoBehaviour
 {
-    public float damageAmount = 0.4f;
     public float fireRate = 5f;         //Bullets per second
     public float fireVelocity = 100f;
     public float bulletLifetime = 1f;
@@ -14,11 +14,17 @@ public class MachineGun : MonoBehaviour
     private float fireInterval;
     private float fireTimer = 0;
 
+    private DamageSource damageSrc;
+
+
 	//Events
     void Awake()
     {
         //Calculate the fire interval
         fireInterval = 1 / fireRate;
+
+        //Get the damage source
+        damageSrc = GetComponent<DamageSource>();
     }
 
     void FixedUpdate()
@@ -52,10 +58,10 @@ public class MachineGun : MonoBehaviour
         //Set the bullet's location
         bulletObj.transform.position = transform.position;
 
-        //Set the bullet's damage amount
-        bulletSrc.damageAmount = damageAmount;
+        //Configure the bullet's damage source.
+        damageSrc.CopyDataTo(bulletSrc);
         bulletSrc.isHot = true;
-        bulletSrc.tags.Add(DamageTag.fromEnemy);
+        bulletSrc.useDefaultHitDetection = true;
         
         //Make sure the bullet doesn't hurt this object
         AbstractHealthPoints myHealth = GetComponent<AbstractHealthPoints>();
