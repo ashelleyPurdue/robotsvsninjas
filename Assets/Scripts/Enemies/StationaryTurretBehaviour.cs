@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(HealthPoints))]
 [RequireComponent(typeof(VisionCone))]
-[RequireComponent(typeof(MachineGun))]
 public class StationaryTurretBehaviour : MonoBehaviour
 {
+    public MachineGun machineGun;
+
     //Tweaking
     private float searchRotSpeed = 45f;
     private float rotSpeed = 180f;
@@ -19,7 +19,6 @@ public class StationaryTurretBehaviour : MonoBehaviour
 
     //Misc fields
     private VisionCone visionCone;
-    private MachineGun machineGun;
     private PlayerBehaviour target;
 
     private Quaternion targetRot; 
