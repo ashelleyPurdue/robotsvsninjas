@@ -33,6 +33,9 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     private Vector3 swingEndPos;
     private Quaternion swingEndRot;
 
+    private Vector3 recoverStartPos;
+    private Quaternion recoverStartRot;
+
     //Misc private fields
     private float timer = 0f;
 
@@ -101,16 +104,32 @@ public class PlayerSwordBehaviour : WeaponBehaviour
         stateMethods[currentState]();
     }
 
+    void OnDealDamage()
+    {
+        //Start recovering
+        StartRecovering();
+    }
 
     //Misc methods
 
     private void StartSwinging()
     {
-        Debug.Log("Starting a swing.");
+        //Start swinging
+
         currentState = State.swinging;
         timer = 0;
         attackBuffered = false;
-        Debug.Log("attackBuffered = " + attackBuffered);
+    }
+
+    private void StartRecovering()
+    {
+        //Start recovering
+
+        recoverStartPos = transform.localPosition;
+        recoverStartRot = transform.localRotation;
+
+        currentState = State.recovering;
+        timer = 0f;
     }
 
 
@@ -151,8 +170,10 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             //Start recovering when done
             if (timer >= swingTime)
             {
-                currentState = State.recovering;
-                timer = 0f;
+                transform.localPosition = swingEndPos;
+                transform.localRotation = swingEndRot;
+
+                StartRecovering();
             }
         }
     }
@@ -169,8 +190,8 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             //Recover
             timer += Time.deltaTime;
 
-            transform.localPosition = Vector3.Slerp(swingEndPos, readyPos, timer / recoverAnimationTime);
-            transform.localRotation = Quaternion.Slerp(swingEndRot, readyRot, timer / recoverAnimationTime);
+            transform.localPosition = Vector3.Slerp(recoverStartPos, readyPos, timer / recoverAnimationTime);
+            transform.localRotation = Quaternion.Slerp(recoverStartRot, readyRot, timer / recoverAnimationTime);
 
             //If the recoveryTime has passed and an attack has been buffered, skip the rest of the animation and start swinging.
             if (timer >= recoverTime && attackBuffered)
