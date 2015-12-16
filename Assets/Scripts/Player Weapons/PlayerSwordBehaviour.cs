@@ -39,6 +39,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     private bool inFixedUpdate = false;
 
     private bool attackButtonPrev = false;
+    private bool attackBuffered = false;
 
     private DamageSource damageSrc;
 
@@ -77,6 +78,14 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 
 	void Update ()
     {
+        //Buffer an attack if the button is pressed
+        if (attackButton == true && attackButtonPrev == false)
+        {
+            Debug.Log("Buffering attack");
+            attackBuffered = true;
+            Debug.Log("attackBuffered = " + attackBuffered);
+        }
+
         //Call the non-fixed portion of the current state
         inFixedUpdate = false;
         stateMethods[currentState]();
@@ -93,6 +102,18 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     }
 
 
+    //Misc methods
+
+    private void StartSwinging()
+    {
+        Debug.Log("Starting a swing.");
+        currentState = State.swinging;
+        timer = 0;
+        attackBuffered = false;
+        Debug.Log("attackBuffered = " + attackBuffered);
+    }
+
+
     //State methods
 
     private void WhileReady()
@@ -106,11 +127,10 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             transform.localPosition = readyPos;
             transform.localRotation = readyRot;
 
-            //Swing when the attack button is pressed.
-            if (attackButton && !attackButtonPrev)
+            //If an attack has been buffered, start swinging
+            if (attackBuffered)
             {
-                currentState = State.swinging;
-                timer = 0f;
+                StartSwinging();
             }
         }
     }
@@ -152,6 +172,12 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             transform.localPosition = Vector3.Slerp(swingEndPos, readyPos, timer / recoverAnimationTime);
             transform.localRotation = Quaternion.Slerp(swingEndRot, readyRot, timer / recoverAnimationTime);
 
+            //If the recoveryTime has passed and an attack has been buffered, skip the rest of the animation and start swinging.
+            if (timer >= recoverTime && attackBuffered)
+            {
+                StartSwinging();
+            }
+
             //Back to ready
             if (timer >= recoverAnimationTime)
             {
@@ -161,15 +187,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
                 timer = 0f;
             }
         }
-        else
-        {
-            //If the recoveryTime has passed and the attack button is pressed, end the animation early and swing again.
-            if (timer >= recoverTime && attackButton && !attackButtonPrev)
-            {
-                currentState = State.swinging;
-                timer = 0f;
-            }
-        }
+
     }
 
     private void WhileSwappedOut()
