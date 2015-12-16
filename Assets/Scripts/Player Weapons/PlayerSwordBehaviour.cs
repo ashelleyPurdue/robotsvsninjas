@@ -7,7 +7,8 @@ public class PlayerSwordBehaviour : WeaponBehaviour
     //Configuration
     //Timing parameters
     private float swingTime = 0.2f;
-    private float recoverTime = 0.5f;
+    private float recoverAnimationTime = 0.5f;  //How long the recovery animation lasts
+    private float recoverTime = 0.3f;           //The rest of the recovery animation can be skipped after this time period.
 
     //Swing position parameters
     private float swingAngle = 67.5f;
@@ -138,6 +139,8 @@ public class PlayerSwordBehaviour : WeaponBehaviour
 
     private void WhileRecovering()
     {
+        //If the recoveryTime has passed and the attack button is pressed, end the animation early and swing again.
+
         if (inFixedUpdate)
         {
             //Make sure the damageSrc is off
@@ -146,15 +149,24 @@ public class PlayerSwordBehaviour : WeaponBehaviour
             //Recover
             timer += Time.deltaTime;
 
-            transform.localPosition = Vector3.Slerp(swingEndPos, readyPos, timer / recoverTime);
-            transform.localRotation = Quaternion.Slerp(swingEndRot, readyRot, timer / recoverTime);
+            transform.localPosition = Vector3.Slerp(swingEndPos, readyPos, timer / recoverAnimationTime);
+            transform.localRotation = Quaternion.Slerp(swingEndRot, readyRot, timer / recoverAnimationTime);
 
             //Back to ready
-            if (timer >= recoverTime)
+            if (timer >= recoverAnimationTime)
             {
                 currentState = State.ready;
                 transform.localPosition = readyPos;
                 transform.localRotation = readyRot;
+                timer = 0f;
+            }
+        }
+        else
+        {
+            //If the recoveryTime has passed and the attack button is pressed, end the animation early and swing again.
+            if (timer >= recoverTime && attackButton && !attackButtonPrev)
+            {
+                currentState = State.swinging;
                 timer = 0f;
             }
         }
