@@ -84,9 +84,7 @@ public class PlayerSwordBehaviour : WeaponBehaviour
         //Buffer an attack if the button is pressed
         if (attackButton == true && attackButtonPrev == false)
         {
-            Debug.Log("Buffering attack");
             attackBuffered = true;
-            Debug.Log("attackBuffered = " + attackBuffered);
         }
 
         //Call the non-fixed portion of the current state
