@@ -138,6 +138,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private void FixedUpdate()
         {
             GroundCheck();
+            Debug.Log("Grounded = " + m_IsGrounded);
             Vector2 input = GetInput();
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
@@ -244,7 +245,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_PreviouslyGrounded = m_IsGrounded;
             RaycastHit hitInfo;
-            if (Physics.SphereCast(transform.position, m_Capsule.radius, Vector3.down, out hitInfo,
+            if (Physics.SphereCast(transform.position, m_Capsule.radius * 0.99f, Vector3.down, out hitInfo,
                                    ((m_Capsule.height/2f) - m_Capsule.radius) + advancedSettings.groundCheckDistance))
             {
                 m_IsGrounded = true;
